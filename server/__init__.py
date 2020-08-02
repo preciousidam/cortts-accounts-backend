@@ -57,5 +57,7 @@ def create_app(test_config=None):
         db.session.commit()
         return 'ok'
 
+    #initialize CORS
+    CORS(app)
 
     return app
