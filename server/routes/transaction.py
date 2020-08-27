@@ -1,5 +1,4 @@
 from flask import Blueprint, jsonify, request
-from flask_cors import CORS
 from flask_jwt_extended import jwt_required
 
 from server.models.Transactions import Transaction
@@ -9,16 +8,10 @@ from server.util.instances import db
 transRoute = Blueprint('transactions', __name__,url_prefix='/api/transactions')
 
 
-
 @transRoute.route('/create', methods=['POST'])
+@jwt_required
 def create_transactions():
-    acct_id = None
-    date = None
-    beneficiary = None
-    description = None
-    amount = None
-    transType = None
-
+    
     if request.method == 'POST':
         acct_id = request.json.get('acct_id')
         date = request.json.get('date')
@@ -26,7 +19,6 @@ def create_transactions():
         description = request.json.get('description')
         amount = request.json.get('amount')
         transType = request.json.get('transType')
-        print(request.get_json())
         
 
     if not acct_id:

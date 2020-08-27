@@ -21,6 +21,7 @@ def get_account(path):
 
 
 @accountsRoute.route('/create', methods=['POST'])
+@jwt_required
 def create_accounts():
     number = None
     name = None
@@ -67,6 +68,7 @@ def create_accounts():
 
 
 @accountsRoute.route('/delete', methods=['POST'])
+@jwt_required
 def delete_accounts():
     id = None
     

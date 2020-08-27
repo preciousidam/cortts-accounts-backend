@@ -1,5 +1,4 @@
 from flask import Blueprint, jsonify, request
-from flask_cors import CORS
 from flask_jwt_extended import create_access_token, get_jwt_claims
 from werkzeug.security import check_password_hash, generate_password_hash
 
@@ -8,7 +7,6 @@ from server.models.User import User
 
 
 authRoute = Blueprint('auth', __name__, url_prefix='/api/auth')
-CORS(authRoute)
 
 @jwt.user_claims_loader
 def add_details_to_token(identity):

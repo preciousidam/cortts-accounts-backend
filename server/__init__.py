@@ -5,10 +5,17 @@ from flask_cors import CORS
 from server.models.User import User
 from server.models.Account import Account
 from server.models.Transactions import Transaction
+from server.models.Budget import Budget, BudgetItem
+from server.models.Expense import Expense, ExpenseItem
+from server.models.ExpenseAccount import ExpenseAccount, ExpenseAccountHistory
+from server.models.OtherModels import Category, Staff
 from server.util.instances import db, initializeDB, initializeJWT
 from server.routes.auth import authRoute
 from server.routes.account import accountsRoute
 from server.routes.transaction import transRoute
+from server.routes.budExp import budExpRoute
+from server.routes.expenseAcct import expAcctRoute
+from server.routes.otherroutes import otherRoute
 from server.util.jsonEncoder import JSONEncoder
     
 
@@ -24,11 +31,11 @@ def create_app(test_config=None):
    
     if test_config is None:
         # load the instance config, if it exists, when not testing
-        app.config.from_pyfile('config.py', silent=False)
-        #app.config.from_envvar('APP_CONFIG')
+        app.config.from_object('config.DevelopementConfig')
+        
     else:
         # load the test config if passed in
-        app.config.from_mapping(test_config)
+        app.config.from_object('config.TestConfig')
 
     # ensure the instance folder exists
     try:
@@ -52,7 +59,10 @@ def create_app(test_config=None):
     #Register Blueprints
     app.register_blueprint(authRoute)
     app.register_blueprint(accountsRoute)
+    app.register_blueprint(budExpRoute)
+    app.register_blueprint(expAcctRoute)
     app.register_blueprint(transRoute)
+    app.register_blueprint(otherRoute)
 
     @app.route('/createDB')
     def create():
@@ -94,7 +104,61 @@ def create_app(test_config=None):
             
         return 'ok'
 
+    @app.route('/addCatToDB')
+    def addcategory():
+        cats = [
+                    {'id': 1, 'name': 'Transportation'},
+                    {'id': 2, 'name': 'Utility'},
+                    {'id': 3, 'name': 'Medical Expenses'},
+                    {'id': 4, 'name': 'office expenses'},
+                    {'id': 5, 'name': 'Telecommunication'},
+                    {'id': 6, 'name': 'Meal Entertainment'},
+                ]
+        
+        
+        for cat in cats:
+            x = Category(title=cat['name'])
+            #db.create_all()
+            db.session.add(x)
+            db.session.commit()
+            
+        return 'ok'
+
+    @app.route('/addStaffToDB')
+    def addstaff():
+        staff = [
+                    {'id': 1, 'name': 'Madam Stella'},
+                    {'id': 2, 'name': 'Madam Aminat'},
+                    {'id': 3, 'name': 'Ebube'},
+                    {'id': 4, 'name': 'Christy'},
+                    {'id': 5, 'name': 'Godwin'},
+                    {'id': 6, 'name': 'Anita'},
+                ]
+        
+        
+        for staf in staff:
+            x = Staff(name=staf['name'])
+            #db.create_all()
+            db.session.add(x)
+            db.session.commit()
+            
+        return 'ok'
+
+    @app.route('/addPettyToDB')
+    def addPetty():
+        
+        x = ExpenseAccount(
+            name = "Impress",
+            balance = "250000.00"
+        )
+        
+        #db.create_all()
+        db.session.add(x)
+        db.session.commit()
+            
+        return 'ok'
+
+
     #initialize CORS
     CORS(app)
-
     return app
