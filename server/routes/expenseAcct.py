@@ -91,7 +91,7 @@ def fund_account():
 
     exp = ExpenseAccount.query.filter_by(id=acct_id).first()
 
-    exp.balance = "{}".format(float(exp.balance) + float(amount))
+    exp.balance = "{:.2f}".format(float(exp.balance) + float(amount))
     
     db.session.commit()
 

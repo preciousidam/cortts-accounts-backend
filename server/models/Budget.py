@@ -7,7 +7,7 @@ class Budget(db.Model):
     date = db.Column(db.String(120), nullable=False)
     ref = db.Column(db.String(255), nullable=False)
     amount = db.Column(db.String(255), nullable=False)
-    items = db.relationship('BudgetItem', backref='budget', lazy=False)
+    items = db.relationship('BudgetItem', cascade='all, delete, delete-orphan', backref='budget', lazy=False, passive_deletes=True)
     created_at = db.Column(db.DateTime(timezone=True), default=dt.now())
     updated_at = db.Column(db.DateTime(timezone=True), default=dt.now(), onupdate=dt.now())
 
@@ -33,7 +33,7 @@ class Budget(db.Model):
 
 class BudgetItem(db.Model):
     id = db.Column(db.Integer, primary_key=True, nullable=False)
-    budget_id = db.Column(db.Integer, db.ForeignKey('budget.id'), nullable=False)
+    budget_id = db.Column(db.Integer, db.ForeignKey('budget.id', ondelete='CASCADE'), nullable=False)
     description = db.Column(db.String(255), nullable=False)
     quantity = db.Column(db.Integer, nullable=False)
     amount = db.Column(db.String(255), nullable=False)

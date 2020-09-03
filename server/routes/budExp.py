@@ -3,6 +3,8 @@ from flask_jwt_extended import jwt_required
 
 from server.models.Budget import Budget, BudgetItem
 from server.models.Expense import Expense, ExpenseItem
+from server.models.ExpenseAccount import ExpenseAccount
+from server.models.OtherModels import Category
 from server.util.instances import db
 
 budExpRoute = Blueprint('budExp', __name__,url_prefix='/api')
@@ -52,9 +54,6 @@ def create_budget():
 
     if not amount:
         return jsonify({'msg': 'Missing amount', 'status': 'failed'}), 400
-
-    
-
 
 
     budget = Budget(
@@ -144,6 +143,12 @@ def create_expense():
         )
         db.session.add(i)
 
+    acct = ExpenseAccount.query.filter_by(id=account).first()
+
+    balance = float(acct.balance) - float(amount)
+
+    acct.balance = "{:.2f}".format(balance)
+
     db.session.commit()
 
     return jsonify({'msg': 'Expenses saved', 'status': 'success'}), 201
@@ -190,18 +195,12 @@ def edit_expense():
     if not recipient:
         return jsonify({'msg': 'Missing recipient', 'status': 'failed'}), 400
 
-
-    data = dict(
-        ref=ref,
-        account=account,
-        payMethod=method,
-        date=date,
-        amount=amount,
-        recipient=recipient,
-    )
     
-    expense = Expense.query.filter_by(id=id).update(data)
+    expense = Expense.query.filter_by(id=id).first()
 
+    diff = float(expense.amount) - float(amount)
+
+    expense.amount = amount
 
     for item in items:
         if 'id' in item:
@@ -229,6 +228,8 @@ def edit_expense():
             ExpenseItem.query.filter_by(id=item['id']).delete()
 
 
+    acct = ExpenseAccount.query.filter_by(id=account).first()
+    acct.balance = "{:.2f}".format(float(acct.balance)-diff)
     db.session.commit()
 
     return jsonify({'msg': 'Expenses saved', 'status': 'success'}), 201
@@ -279,3 +280,17 @@ def delete_expenses():
 
     expense = Expense.query.all()
     return jsonify({'data': expense, 'msg': 'Expenses deleted', 'status': 'success'}), 201
+
+
+@budExpRoute.route('/expense/summary', methods=['GET'])
+def summarize_expenses():
+    categories = Category.query.all()
+    expenses = ExpenseItem.query.all()
+
+    data = []
+
+    for cat in categories:
+        exp = [item for item in expenses if item.category == cat.id]
+        data.append({'category': cat, 'items': exp})
+
+    return jsonify({'data': data, 'msg': 'success'}), 200

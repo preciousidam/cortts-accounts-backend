@@ -10,7 +10,7 @@ class Expense(db.Model):
     payMethod = db.Column(db.String(255), nullable=True)
     ref = db.Column(db.String(255), nullable=False)
     amount = db.Column(db.String(255), default="", nullable=False)
-    items = db.relationship('ExpenseItem',cascade='all, delete, delete-orphan', backref='expense', lazy=False, passive_deletes=True)
+    items = db.relationship('ExpenseItem', cascade='all, delete, delete-orphan', backref='expense', lazy=False, passive_deletes=True)
     created_at = db.Column(db.DateTime(timezone=True), default=dt.now())
     updated_at = db.Column(db.DateTime(timezone=True), default=dt.now(), onupdate=dt.now())
 
@@ -48,7 +48,7 @@ class ExpenseItem(db.Model):
     updated_at = db.Column(db.DateTime(timezone=True), default=dt.now(), onupdate=dt.now())
 
     def __repr__(self):
-        return 'Item in expenses for %r' % self.date
+        return 'Item in expenses for %r' % str(self.created_at)
 
     def json(self):
         return {
