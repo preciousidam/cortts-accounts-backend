@@ -9,6 +9,8 @@ from server.models.Budget import Budget, BudgetItem
 from server.models.Expense import Expense, ExpenseItem
 from server.models.ExpenseAccount import ExpenseAccount, ExpenseAccountHistory
 from server.models.OtherModels import Category, Staff
+from server.models.Clients import Landlord, Tenant
+from server.models.Flat import Flat
 from server.util.instances import db, initializeDB, initializeJWT
 from server.routes.auth import authRoute
 from server.routes.account import accountsRoute
@@ -16,24 +18,30 @@ from server.routes.transaction import transRoute
 from server.routes.budExp import budExpRoute
 from server.routes.expenseAcct import expAcctRoute
 from server.routes.otherroutes import otherRoute
+from server.routes.landlord import landlordsRoute
+from server.routes.tenant import tenantsRoute
 from server.util.jsonEncoder import JSONEncoder
     
 
-
-def create_app(test_config=None):
+#create_app(test_config=None):
+def create_app(env):
     # create and configure the app
     
     app = Flask(__name__, instance_relative_config=True)
-    app.config.from_mapping(
+    '''app.config.from_mapping(
         SECRET_KEY='dev',
         DATABASE=os.path.join(app.instance_path, 'flaskr.sqlite'),
-    )
+    )'''
    
-    if test_config is None:
-        # load the instance config, if it exists, when not testing
+    if env == 'development':
+        # load the instance dev config, if it exists, when not testing
         app.config.from_object('config.DevelopementConfig')
+
+    elif env == 'production':
+        # load the instance production config, if it exists, when not testing
+        app.config.from_object('config.ProductionConfig')
         
-    else:
+    elif env == 'testing':
         # load the test config if passed in
         app.config.from_object('config.TestConfig')
 
@@ -63,6 +71,8 @@ def create_app(test_config=None):
     app.register_blueprint(expAcctRoute)
     app.register_blueprint(transRoute)
     app.register_blueprint(otherRoute)
+    app.register_blueprint(landlordsRoute)
+    app.register_blueprint(tenantsRoute)
 
     @app.route('/createDB')
     def create():

@@ -1,1 +1,1 @@
-web: gunicorn -w 4 setup:app
+web: gunicorn -w 4 "server:create_app('production')"

@@ -34,6 +34,7 @@ def get_expense(path):
 
 
 @budExpRoute.route('/budget/create', methods=['POST'])
+@jwt_required
 def create_budget():
 
     if request.method == 'POST':
@@ -81,6 +82,7 @@ def create_budget():
 
 
 @budExpRoute.route('/expense/create', methods=['POST'])
+@jwt_required
 def create_expense():
 
     if request.method == 'POST':
@@ -155,6 +157,7 @@ def create_expense():
 
 
 @budExpRoute.route('/expense/edit', methods=['POST'])
+@jwt_required
 def edit_expense():
 
     if request.method == 'POST':

@@ -28,6 +28,6 @@ class JSONEncoder(JSONEncoder):
 
         if isinstance(obj, dt):
             #return o.strftime("%Y-%m-%d %H:%M:%S")
-            return obj.strftime("%Y-%m-%d")
+            return obj.strftime("%d-%m-%Y")
 
         return JSONEncoder.default(self, obj)

@@ -16,7 +16,7 @@ class Config:
     JWT_SECRET_KEY=os.getenv('JWT_SECRET_KEY')
     SQLALCHEMY_DATABASE_URI=os.getenv('SQLALCHEMY_DATABASE_URI')
     SQLALCHEMY_TRACK_MODIFICATIONS=bool(os.getenv('SQLALCHEMY_TRACK_MODIFICATIONS'))
-    SQLALCHEMY_POOL_RECYCLE=int(os.getenv('SQLALCHEMY_POOL_RECYCLE', 2000))
+    SQLALCHEMY_ENGINE_OPTIONS={'pool_recycle': int(os.getenv('SQLALCHEMY_POOL_RECYCLE', 2000))}
 
     MAIL_DEFAULT_SENDER=os.getenv('MAIL_DEFAULT_SENDER')
     MAIL_SERVER=os.getenv('MAIL_SERVER')
@@ -29,7 +29,7 @@ class Config:
     MAIL_USE_SSL=True
 
 class TestConfig(Config):
-    SQLALCHEMY_DATABASE_URI = os.path.join(env_path, 'flaskr.sqlite')
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///'+os.path.join(Path('.'), 'test.db')
 
 class DevelopementConfig(Config):
     ENV = os.getenv('ENV')
