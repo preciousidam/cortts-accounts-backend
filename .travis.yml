@@ -14,7 +14,7 @@ script:
 deploy:
   provider: heroku
   api_key:
-    secure: 
+    secure: ImTTDOYXwKOaOXU+MROuv5Sfx8mbenRuS/SVWJ6qiycQJoia/KqbnoNQCUAqLNnzI/9uou87Aw4bVSEroTdFr6xFficUwvnoPZPmCstILOW3bGFYH2ptEgTQsPHFcC/ZnCtYjXwUJg0JBk/cXsTbwtMy7Gfmr/3d4ElWw0mC2FgFv1LYRSCp6N23YoajRrs2fjiSKA4B9AzK1vJF6225CuzCysII7Wt+5nWAT6wWGSc5LvYDG8SnZ5VaFj1V65skRfKXTOJTa6EkavuEm8kEFUgiixUiSXdorHxbzQGRwToSy0Ed8M3Z8MIKvsh5cl3ZV6n8RAaMyQZE1BXkQ6gDNAWfNVOAWC2XPUa1ruN8naduWM9t6Oc8sGxTTZse94gDv/KTuQp5cAX4MpSplxmFQoItfhQFBNniAMA0e0/Ms6bnTfkNcetDV+FXRLmsSjFHo1opxs+RwW7/crwWqR1TaGGCctaL7QmFgUT/yMGO8059adIPnXt7vY91GJiBHx3V68tyiwEhhK8DiHhnBlyBddFvlVTOf5MATXZYqwfA9vk6IWBp6/JLMv3AkE2ULTD5AMRQ70TkB7AKT1xWL7opavj8f2gAXUfNKYSiJidqfbDj5WkQCqAPRhBacqQ4FMs+5MkrjtgvD4b5O8dN0a850GshW4MEvwBdS8cRDLqBrsI=
   app: cortts-accounts-backend
-  on:
+  true:
     repo: preciousidam/cortts-accounts-backend
