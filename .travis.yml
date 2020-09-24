@@ -14,7 +14,7 @@ script:
 deploy:
   provider: heroku
   api_key:
-    secure: ac817b7e-a017-4b72-a358-fd23e1b8f68b
+    secure: 
   app: cortts-accounts-backend
   on:
     repo: preciousidam/cortts-accounts-backend
