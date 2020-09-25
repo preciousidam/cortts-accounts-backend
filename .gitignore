@@ -7,6 +7,8 @@ __pycache__/
 
 dont-push.txt
 
+test.db
+
 # C extensions
 *.so
 

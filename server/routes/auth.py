@@ -23,10 +23,10 @@ def login():
     password = request.json.get('password', None)
 
     if not email:
-        return {'status': 'error', 'msg': 'Email not provide'}, 400
+        return {'status': 'error', 'msg': 'Email not provided'}, 400
     
     if not password:
-        return {'status': 'error', 'msg': 'Password not provide'}, 400
+        return {'status': 'error', 'msg': 'Password not provided'}, 400
 
     user = User.query.filter_by(email=email).first()
 
@@ -50,17 +50,21 @@ def create():
     name = request.json.get('name', None)
 
     if not email:
-        return {'status': 'error', 'msg': 'Email not provide'}, 400
+        return {'status': 'error', 'msg': 'Email not provided'}, 400
     
     if not password:
-        return {'status': 'error', 'msg': 'Password not provide'}, 400
+        return {'status': 'error', 'msg': 'Password not provided'}, 400
 
     if not name:
-        return {'status': 'error', 'msg': 'Name not provide'}, 400
+        return {'status': 'error', 'msg': 'Name not provided'}, 400
     
     if not phone:
-        return {'status': 'error', 'msg': 'Phone number not provide'}, 400
+        return {'status': 'error', 'msg': 'Phone number not provided'}, 400
 
+    user = User.query.filter_by(email=email).first()
+
+    if user is not None:
+        return {'status': 'error', 'msg': 'Email address already exist! try login'}, 400
 
     user = User(
         name=name,

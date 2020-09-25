@@ -35,15 +35,15 @@ def create_app(env):
    
     if env == 'development':
         # load the instance dev config, if it exists, when not testing
-        app.config.from_object('config.DevelopementConfig')
+        app.config.from_object('instance.config.DevelopementConfig')
 
     elif env == 'production':
         # load the instance production config, if it exists, when not testing
-        app.config.from_object('config.ProductionConfig')
+        app.config.from_object('instance.config.ProductionConfig')
         
     elif env == 'testing':
         # load the test config if passed in
-        app.config.from_object('config.TestConfig')
+        app.config.from_object('instance.config.TestConfig')
 
     # ensure the instance folder exists
     try:
