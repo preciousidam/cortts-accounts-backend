@@ -61,6 +61,53 @@ def create_tenants():
     tenants = Tenant.query.all()
     return jsonify({'data': tenants, 'msg': 'Tenant saved', 'status': 'success'}), 201
 
+@tenantsRoute.route('/edit', methods=['POST'])
+@jwt_required
+def edit_tenants():
+
+    if request.method == 'POST':
+        name = request.json.get('name')
+        email = request.json.get('email')
+        address = request.json.get('address')
+        contactPerson = request.json.get('contactPerson')
+        phone = request.json.get('phone')
+        id = request.json.get('id')
+
+    if not id:
+        return jsonify({'msg': 'Missing Tenant ID', 'status': 'failed'}), 400
+
+    if not name:
+        return jsonify({'msg': 'Missing Tenant Name', 'status': 'failed'}), 400
+
+    if not email:
+        return jsonify({'msg': 'Missing Tenant Email', 'status': 'failed'}), 400
+
+    if not address:
+        return jsonify({'msg': 'Missing Tenant Address', 'status': 'failed'}), 400
+
+    if not phone:
+        return jsonify({'msg': 'Missing Tenant Phone', 'status': 'failed'}), 400
+
+    if not contactPerson:
+        return jsonify({'msg': 'Missing Tenant Contact Person', 'status': 'failed'}), 400
+
+
+    data = dict(
+        name = name,
+        email = email,
+        address = address,
+        phone = phone,
+        contactPerson = contactPerson
+    )
+
+    tenant = Tenant.query.filter_by(id=id).update(data)
+
+    db.session.commit()
+    tenant = Tenant.query.filter_by(id=id).first()
+
+
+    return jsonify({'data': tenant, 'msg': 'Tenant saved', 'status': 'success'}), 201
+
 
 @tenantsRoute.route('/delete', methods=['POST'])
 @jwt_required

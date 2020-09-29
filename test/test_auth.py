@@ -4,6 +4,7 @@ from server.models.User import User
 from server.util.instances import db
 
 
+
 def test_login(client, app):
    
     resp = client.post('/api/auth/login', json={'email': 'ebube@cortts.com', 'password': 'lilian01'})

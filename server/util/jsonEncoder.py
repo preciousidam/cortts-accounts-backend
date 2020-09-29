@@ -8,6 +8,8 @@ from server.models.Budget import Budget, BudgetItem
 from server.models.Expense import Expense, ExpenseItem
 from server.models.ExpenseAccount import ExpenseAccount, ExpenseAccountHistory
 from server.models.OtherModels import Category, Staff
+from server.models.Clients import Landlord, Tenant
+from server.models.Flat import Flat
 
 class JSONEncoder(JSONEncoder):
     def default(self, obj):
@@ -24,6 +26,12 @@ class JSONEncoder(JSONEncoder):
             return obj.json()
 
         if isinstance(obj, Category) or isinstance(obj, Staff):
+            return obj.json()
+
+        if isinstance(obj, Landlord) or isinstance(obj, Tenant):
+            return obj.json()
+        
+        if isinstance(obj, Flat):
             return obj.json()
 
         if isinstance(obj, dt):

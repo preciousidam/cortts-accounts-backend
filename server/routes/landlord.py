@@ -62,6 +62,54 @@ def create_landlords():
     return jsonify({'data': landlords, 'msg': 'Landlord saved', 'status': 'success'}), 201
 
 
+@landlordsRoute.route('/edit', methods=['POST'])
+@jwt_required
+def edit_landlords():
+
+    if request.method == 'POST':
+        name = request.json.get('name')
+        email = request.json.get('email')
+        address = request.json.get('address')
+        contactPerson = request.json.get('contactPerson')
+        phone = request.json.get('phone')
+        id = request.json.get('id')
+
+    if not id:
+        return jsonify({'msg': 'Missing Landlord ID', 'status': 'failed'}), 400
+
+    if not name:
+        return jsonify({'msg': 'Missing Landlord Name', 'status': 'failed'}), 400
+
+    if not email:
+        return jsonify({'msg': 'Missing Landlord Email', 'status': 'failed'}), 400
+
+    if not address:
+        return jsonify({'msg': 'Missing Landlord Address', 'status': 'failed'}), 400
+
+    if not phone:
+        return jsonify({'msg': 'Missing Landlord Phone', 'status': 'failed'}), 400
+
+    if not contactPerson:
+        return jsonify({'msg': 'Missing Landlord Contact Person', 'status': 'failed'}), 400
+
+
+    data = dict(
+        name = name,
+        email = email,
+        address = address,
+        phone = phone,
+        contactPerson = contactPerson
+    )
+
+    Landlord.query.filter_by(id=id).update(data)
+    db.session.commit()
+    landlord = Landlord.query.filter_by(id=id).first()
+    
+
+
+    return jsonify({'data': landlord, 'msg': 'Landlord saved', 'status': 'success'}), 201
+
+
 @landlordsRoute.route('/delete', methods=['POST'])
 @jwt_required
 def delete_landlords():
