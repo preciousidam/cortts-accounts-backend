@@ -6,19 +6,30 @@ from server.util.instances import db
 
 otherRoute = Blueprint('otherroutes', __name__,url_prefix='/api/routes')
 
-@otherRoute.route('/categories', methods=['GET'])
+@otherRoute.route('/categories/', methods=['GET'])
 def get_all_categories():
     categories = Category.query.all()
     return jsonify({'data': categories, 'msg': 'success'}), 200
 
-@otherRoute.route('/staff', methods=['GET'])
+@otherRoute.route('/categories/<path:path>', methods=['GET'])
+def get_category(path):
+    categories = Category.query.filter_by(id=path).first()
+    return jsonify({'data': categories, 'msg': 'success'}), 200
+
+@otherRoute.route('/staff/', methods=['GET'])
 def get_all_staff():
     staff = Staff.query.all()
     return jsonify({'data': staff, 'msg': 'success'}), 200
 
 
+@otherRoute.route('/staff/<path:path>', methods=['GET'])
+def get_staff(path):
+    staff = Staff.query.filter_by(id=path).first()
+    return jsonify({'data': staff, 'msg': 'success'}), 200
 
-@otherRoute.route('/category/create', methods=['POST'])
+
+
+@otherRoute.route('/categories/create', methods=['POST'])
 @jwt_required
 def create_category():
     

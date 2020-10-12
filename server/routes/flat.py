@@ -16,7 +16,7 @@ def get_all_flats():
 
 @flatsRoute.route('/<path:path>', methods=['GET'])
 def get_account(path):
-    flats = Flat.query.filter_by(id=path).first()
+    flats = Flat.query.filter_by(name=path).first()
     return jsonify({'data': flats, 'msg': 'success'}), 200
 
 
@@ -34,13 +34,15 @@ def create_flats():
         rent = request.json.get('rent')
         serv_charge = request.json.get('serv_charge')
         period = request.json.get('period')
-        status = request.json.get('status')
+        status = request.json.get('status', False)
         note = request.json.get('note')
         noOfBed = request.json.get('noOfBed')
         noOfBath = request.json.get('noOfBath')
         noOfToilet = request.json.get('noOfToilet')
         noOfPark = request.json.get('noOfPark')
-        furnished = request.json.get('furnished')
+        furnished = request.json.get('furnished', False)
+
+    print(status)
 
     if not name:
         return jsonify({'msg': 'Missing Flat title', 'status': 'failed'}), 400
@@ -69,13 +71,12 @@ def create_flats():
     if not period:
         return jsonify({'msg': 'Missing tenancy period', 'status': 'failed'}), 400
 
-    if not status:
+    if status != True and status != False:
         return jsonify({'msg': 'Missing Flat status', 'status': 'failed'}), 400
         
 
-    if not furnished:
+    if furnished != True and furnished != False:
         return jsonify({'msg': 'Missing Furnished', 'status': 'failed'}), 400
-
 
 
     if not noOfBath:
@@ -101,7 +102,7 @@ def create_flats():
         rent = rent,
         serv_charge = serv_charge,
         period = period,
-        status = status,
+        status = "Occupied" if status else 'Vacant',
         note = note,
         noOfBed = noOfBed,
         noOfBath = noOfBath,
@@ -121,7 +122,7 @@ def create_flats():
 @flatsRoute.route('/edit', methods=['POST'])
 @jwt_required
 def edit_flats():
-
+    print(request.get_json())
     if request.method == 'POST':
         id = request.json.get('id')
         name = request.json.get('name')
@@ -133,13 +134,13 @@ def edit_flats():
         rent = request.json.get('rent')
         serv_charge = request.json.get('serv_charge')
         period = request.json.get('period')
-        status = request.json.get('status')
+        status = request.json.get('status', False)
         note = request.json.get('note')
         noOfBed = request.json.get('noOfBed')
         noOfBath = request.json.get('noOfBath')
         noOfToilet = request.json.get('noOfToilet')
         noOfPark = request.json.get('noOfPark')
-        furnished = request.json.get('furnished')
+        furnished = request.json.get('furnished', False)
 
     if not id:
         return jsonify({'msg': 'Missing Flat ID', 'status': 'failed'}), 400
@@ -171,11 +172,11 @@ def edit_flats():
     if not period:
         return jsonify({'msg': 'Missing tenancy period', 'status': 'failed'}), 400
 
-    if not status:
+    if status != True and status != False:
         return jsonify({'msg': 'Missing Flat status', 'status': 'failed'}), 400
         
 
-    if not furnished:
+    if furnished != True and furnished != False:
         return jsonify({'msg': 'Missing Furnished', 'status': 'failed'}), 400
 
 
@@ -203,7 +204,7 @@ def edit_flats():
         rent = rent,
         serv_charge = serv_charge,
         period = period,
-        status = status,
+        status = "Occupied" if status else 'Vacant',
         note = note,
         noOfBed = noOfBed,
         noOfBath = noOfBath,

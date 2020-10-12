@@ -95,7 +95,7 @@ def test_validate_flat_param(client, createFlat, name, prop, address, area, rent
     'landlord', 'period', 'status', 'furnished', 'noOfBed', 'noOfBath', 'noOfPark', 'noOfToilet', 'message'),
     (
         ("name", "prop", "address", "area", "rent", "serv_charge", 'tenant', 
-        'landlord', 'period', 'status', True, 'noOfBed', 'noOfBath', 'noOfPark', 'noOfToilet', 'Flat saved'),
+        'landlord', 'period', True, True, 'noOfBed', 'noOfBath', 'noOfPark', 'noOfToilet', 'Flat saved'),
     ),
 )
 def test_create_flat_param(client, createFlat, name, prop, address, area, rent, serv_charge, tenant, 
@@ -134,7 +134,7 @@ def test_create_flat_param(client, createFlat, name, prop, address, area, rent, 
     ("name", "prop", "address", "area", "rent", "serv_charge", 'tenant', 
     'landlord', 'period', 'status', 'furnished', 'noOfBed', 'noOfBath', 'noOfPark', 'noOfToilet', 'message'),
     (
-        ("AM6", "prop", "address", "area", "rent", "serv_charge", 'flour mill', 'modd family', 'period', 'status', 
+        ("AM6", "prop", "address", "area", "rent", "serv_charge", 'flour mill', 'modd family', 'period', False, 
         True, 'noOfBed', 'noOfBath', 'noOfPark', 'noOfToilet', 'Flat details saved'),
     ),
 )

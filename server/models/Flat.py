@@ -12,7 +12,7 @@ class Flat(db.Model):
     rent = db.Column(db.String(255), nullable=False)
     serv_charge = db.Column(db.String(255), nullable=False)
     period = db.Column(db.String(255), nullable=False)
-    status = db.Column(db.String(255), nullable=False)
+    status = db.Column(db.String(255), default='Vacant', nullable=False)
     note = db.Column(db.String(1000), default='')
     noOfBed = db.Column(db.Integer, nullable=False)
     noOfBath = db.Column(db.Integer, nullable=False)
