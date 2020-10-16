@@ -11,6 +11,7 @@ from server.models.ExpenseAccount import ExpenseAccount, ExpenseAccountHistory
 from server.models.OtherModels import Category, Staff
 from server.models.Clients import Landlord, Tenant
 from server.models.Flat import Flat
+from server.models.OtherAccounts import OtherAccount
 from server.util.instances import db, initializeDB, initializeJWT
 from server.routes.auth import authRoute
 from server.routes.account import accountsRoute
