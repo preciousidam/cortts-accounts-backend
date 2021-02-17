@@ -4,10 +4,11 @@ __pycache__/
 *$py.class
 
 .vscode
-
+.vscode/*
 dont-push.txt
 
 test.db
+startapp.bat
 
 # C extensions
 *.so
