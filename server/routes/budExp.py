@@ -1,5 +1,6 @@
 from flask import Blueprint, jsonify, request
 from flask_jwt_extended import jwt_required
+from flask_cors import CORS
 
 from server.models.Budget import Budget, BudgetItem
 from server.models.Expense import Expense, ExpenseItem
@@ -8,6 +9,8 @@ from server.models.OtherModels import Category
 from server.util.instances import db
 
 budExpRoute = Blueprint('budExp', __name__,url_prefix='/api')
+
+CORS(budExpRoute)
 
 @budExpRoute.route('/budget/', methods=['GET'])
 def get_all_budgets():

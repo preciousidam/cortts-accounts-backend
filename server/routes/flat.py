@@ -1,12 +1,15 @@
 from flask import Blueprint, jsonify, request
 from flask_cors import CORS
 from flask_jwt_extended import jwt_required
+from flask_cors import CORS
 
 from server.models.Flat import Flat
 from server.util.instances import db
 
 
 flatsRoute = Blueprint('flats', __name__,url_prefix='/api/flats')
+
+CORS(flatsRoute)
 
 @flatsRoute.route('/', methods=['GET'])
 def get_all_flats():

@@ -1,10 +1,13 @@
 from flask import Blueprint, jsonify, request
 from flask_jwt_extended import jwt_required
+from flask_cors import CORS
 
 from server.models.OtherModels import Category, Staff
 from server.util.instances import db
 
 otherRoute = Blueprint('otherroutes', __name__,url_prefix='/api/routes')
+
+CORS(otherRoute)
 
 @otherRoute.route('/categories/', methods=['GET'])
 def get_all_categories():

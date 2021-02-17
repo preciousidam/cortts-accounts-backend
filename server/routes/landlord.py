@@ -1,12 +1,15 @@
 from flask import Blueprint, jsonify, request
 from flask_cors import CORS
 from flask_jwt_extended import jwt_required
+from flask_cors import CORS
 
 from server.models.Clients import Landlord
 from server.util.instances import db
 
 
 landlordsRoute = Blueprint('landlords', __name__,url_prefix='/api/landlords')
+
+CORS(landlordsRoute)
 
 @landlordsRoute.route('/', methods=['GET'])
 def get_all_landlords():

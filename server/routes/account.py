@@ -1,12 +1,15 @@
 from flask import Blueprint, jsonify, request
 from flask_cors import CORS
 from flask_jwt_extended import jwt_required
+from flask_cors import CORS
 
 from server.models.Account import Account
 from server.util.instances import db
 
 
 accountsRoute = Blueprint('accounts', __name__,url_prefix='/api/accounts')
+
+CORS(accountsRoute)
 
 @accountsRoute.route('/', methods=['GET'])
 def get_all_accounts():

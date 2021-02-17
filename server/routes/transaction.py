@@ -1,11 +1,14 @@
 from flask import Blueprint, jsonify, request
 from flask_jwt_extended import jwt_required
+from flask_cors import CORS
 
 from server.models.Transactions import Transaction
 from server.models.Account import Account
 from server.util.instances import db
 
 transRoute = Blueprint('transactions', __name__,url_prefix='/api/transactions')
+
+CORS(transRoute)
 
 
 @transRoute.route('/create', methods=['POST'])
